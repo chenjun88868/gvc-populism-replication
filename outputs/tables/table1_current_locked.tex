@@ -1,0 +1,46 @@
+%% Table 1: Baseline Dynamic Panel Results
+
+\begin{table}[!htbp]
+\centering
+\caption{Baseline Dynamic Panel Results: Government Populism and GVC Resilience}
+\label{tab:baseline}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lC{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Group 1: Network Structure Contribution}} & \multicolumn{2}{c}{\textbf{Group 2: Positional Role}} & \multicolumn{2}{c}{\textbf{Group 3: Embedding}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8}
+& ACV & EV & LC & FB & WMDZ & SE & PC \\
+\midrule
+\multicolumn{8}{l}{\textit{Panel A: M1 (Lagged Y + Populism only)}} \\[2pt]
+Populism$_{t-1}$ &
+  $-$0.004 & $-$0.000 & 0.041 & 0.052$^{*}$ & $-$0.020 & 0.017$^{*}$ & 0.002 \\
+& (0.006) & (0.000) & (0.027) & (0.027) & (0.018) & (0.009) & (0.009) \\[4pt]
+$\rho$ (Lagged Y) &
+  0.656$^{***}$ & 0.990$^{***}$ & 0.890$^{***}$ & 0.678$^{***}$ & 0.677$^{***}$ & 0.827$^{***}$ & 0.618$^{***}$ \\
+& (0.026) & (0.015) & (0.040) & (0.043) & (0.096) & (0.035) & (0.043) \\[4pt]
+N & 1,803 & 1,803 & 1,803 & 1,803 & 1,803 & 1,803 & 1,803 \\
+\midrule
+\multicolumn{8}{l}{\textit{Panel B: M2 (+ GDP, Trade Openness, FDI)}} \\[2pt]
+Populism$_{t-1}$ &
+  0.000 & $-$0.000 & 0.034 & 0.045$^{*}$ & $-$0.019 & 0.018$^{*}$ & 0.003 \\
+& (0.002) & (0.000) & (0.026) & (0.024) & (0.022) & (0.009) & (0.009) \\[4pt]
+N & 1,715 & 1,715 & 1,715 & 1,715 & 1,715 & 1,715 & 1,715 \\
+\midrule
+\multicolumn{8}{l}{\textit{Panel C: M3 (+ Inflation, full specification)}} \\[2pt]
+Populism$_{t-1}$ &
+  0.000 & $-$0.000 & 0.026 & 0.041 & $-$0.018 & 0.019$^{**}$ & 0.003 \\
+& (0.002) & (0.000) & (0.027) & (0.026) & (0.022) & (0.009) & (0.010) \\[4pt]
+N & 1,689 & 1,689 & 1,689 & 1,689 & 1,689 & 1,689 & 1,689 \\
+Countries & 73 & 73 & 73 & 73 & 73 & 73 & 73 \\
+Country FE & Yes & Yes & Yes & Yes & Yes & Yes & Yes \\
+Year FE & Yes & Yes & Yes & Yes & Yes & Yes & Yes \\
+Lagged Outcome & Yes & Yes & Yes & Yes & Yes & Yes & Yes \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize
+\textit{Notes}: ACV = Algebraic Connectivity Vitality; EV = Efficiency Vitality; LC = log(Laplacian Centrality); FB = log(1+Flow Betweenness); WMDZ = Within-Module Degree Z-Score; SE = Shannon Entropy; PC = Participation Coefficient. All specifications include a lagged dependent variable ($\hat{\rho}$, shown in Panel A), two-way fixed effects, and standard errors clustered at the country level (in parentheses). M2 adds $\ln$GDP$_{t-1}$, $\ln$TradeOpenness$_{t-1}$, and $\text{asinh}$(FDI)$_{t-1}$. M3 additionally adds $\text{asinh}(\widetilde{\text{Inflation}})_{t-1}$, where $\widetilde{\text{Inflation}}$ is winsorized at the 1st and 99th percentiles. $^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.10$.
+\end{minipage}
+\end{table}

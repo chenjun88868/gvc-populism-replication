@@ -1,0 +1,38 @@
+%% Table 4: Mechanism Step 1 — Populism -> Rule-Based Governance
+
+\begin{table}[!htbp]
+\centering
+\caption{Mechanism Analysis, Step 1: Government Populism and Rule-Based Governance}
+\label{tab:mech1}
+\begin{tabular}{lccc}
+\toprule
+& \multicolumn{3}{c}{\textit{Dependent Variable: Rule-Based Governance$_{t-1}$}} \\
+\cmidrule(lr){2-4}
+& M1 (Basic) & M2 (Main) & M3 (Extended) \\
+\midrule
+Populism$_{t-2}$ & $-$0.010 & $-$0.005$^{***}$ & $-$0.005$^{***}$ \\
+& (0.009) & (0.002) & (0.002) \\[4pt]
+Rule-based Governance$_{t-2}$ & & 0.903$^{***}$ & 0.901$^{***}$ \\
+& & (0.030) & (0.028) \\[4pt]
+$\ln$GDP$_{t-2}$ & & & $-$0.007$^{**}$ \\
+& & & (0.003) \\[4pt]
+$\ln$TradeOpen$_{t-2}$ & & & $-$0.019$^{**}$ \\
+& & & (0.008) \\[4pt]
+$\text{asinh}$(FDI)$_{t-2}$ & & & $-$0.001 \\
+& & & (0.001) \\[4pt]
+$\text{asinh}(\widetilde{\text{Inflation}})_{t-2}$ & & & 0.001 \\
+& & & (0.001) \\[4pt]
+\midrule
+N & 1,737 & 1,737 & 1,737 \\
+Countries & 72 & 72 & 72 \\
+Country FE & Yes & Yes & Yes \\
+Year FE & Yes & Yes & Yes \\
+R$^2$ & 0.953 & 0.991 & 0.992 \\
+\bottomrule
+\end{tabular}
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize
+\textit{Notes}: The dependent variable is the V-Dem rule-based governance index (\texttt{v2x\_rule}) measured at $t-1$. Government populism is lagged by two periods so that the mechanism chain runs from populism at $t-2$ to governance at $t-1$ to GVC outcomes at $t$. M1 includes only populism$_{t-2}$, country fixed effects, and year fixed effects. M2 adds the lagged governance level to capture institutional persistence. M3 adds lagged macroeconomic controls. Standard errors clustered at the country level. $^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.10$.
+\end{minipage}
+\end{table}

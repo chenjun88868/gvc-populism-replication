@@ -1,0 +1,59 @@
+%% Table 2: Conditional-Effect Models (Interaction Results)
+
+\begin{table}[!htbp]
+\centering
+\caption{Conditional-Effect Models: Populism Interactions (M3 Specification)}
+\label{tab:interaction}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lC{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Group 1: Structure}} & \multicolumn{2}{c}{\textbf{Group 2: Position}} & \multicolumn{2}{c}{\textbf{Group 3: Embedding}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8}
+& ACV & EV & LC & FB & WMDZ & SE & PC \\
+\midrule
+
+\multicolumn{8}{l}{\textit{Panel A: Populism $\times$ Trade Openness}} \\[2pt]
+Populism$_{t-1}$ &
+  $-$0.023$^{*}$ & 0.000 & $-$0.057 & $-$0.314 & $-$0.162 & $-$0.028 & $-$0.020 \\
+& (0.012) & (0.003) & (0.211) & (0.274) & (0.257) & (0.083) & (0.086) \\[4pt]
+Populism $\times$ Openness &
+  0.005$^{*}$ & $-$0.000 & 0.019 & 0.082 & 0.033 & 0.011 & 0.005 \\
+& (0.003) & (0.001) & (0.050) & (0.067) & (0.058) & (0.019) & (0.019) \\[4pt]
+
+\midrule
+\multicolumn{8}{l}{\textit{Panel B: Populism $\times$ Democracy (Polyarchy)}} \\[2pt]
+Populism$_{t-1}$ &
+  0.014 & $-$0.001 & 0.067 & 0.020 & $-$0.012 & 0.059 & $-$0.036 \\
+& (0.011) & (0.001) & (0.119) & (0.089) & (0.065) & (0.042) & (0.038) \\[4pt]
+Populism $\times$ Democracy &
+  $-$0.020 & 0.001 & $-$0.062 & 0.032 & $-$0.009 & $-$0.061 & 0.058 \\
+& (0.014) & (0.001) & (0.154) & (0.115) & (0.098) & (0.053) & (0.048) \\[4pt]
+
+\midrule
+\multicolumn{8}{l}{\textit{Panel C: Populism $\times$ Region (Americas interaction)}} \\[2pt]
+Populism$_{t-1}$ (base) &
+  (ref.) & (ref.) & (ref.) & (ref.) & (ref.) & (ref.) & (ref.) \\[4pt]
+Pop $\times$ Europe &
+  $-$0.001 & 0.000 & 0.042 & 0.069$^{*}$ & 0.011 & 0.009 & 0.011 \\
+& (0.001) & (0.000) & (0.029) & (0.039) & (0.028) & (0.010) & (0.007) \\[4pt]
+Pop $\times$ Asia &
+  $-$0.001 & $-$0.001 & $-$0.045 & $-$0.024 & $-$0.045 & 0.024 & $-$0.035 \\
+& (0.002) & (0.001) & (0.063) & (0.069) & (0.056) & (0.028) & (0.028) \\[4pt]
+\textbf{Pop $\times$ Americas} &
+  $-$0.004 & $-$0.001$^{**}$ & $-$0.090$^{***}$ & 0.068$^{*}$ & $-$0.160 & 0.072$^{***}$ & 0.042$^{***}$ \\
+& (0.005) & (0.001) & (0.032) & (0.039) & (0.099) & (0.019) & (0.012) \\[4pt]
+
+\midrule
+\multirow{3}{*}{Common to all panels} & \multicolumn{7}{c}{N = 1,689; Countries = 73; Country FE; Year FE; Lagged Outcome}\\
+& \multicolumn{7}{c}{Standard errors clustered at country level} \\
+& \multicolumn{7}{c}{Full controls ($\ln$GDP, $\ln$Trade, $\text{asinh}$FDI, $\text{asinh}\widetilde{\text{Inflation}}$)} \\
+
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize
+\textit{Notes}: Each panel reports key coefficients from a separate M3 dynamic panel specification that includes the lagged dependent variable, two-way fixed effects, and country-clustered standard errors. Panel A tests whether the populism effect varies with trade openness; Panel B conditions on polyarchy (V-Dem); Panel C allows the populism slope to vary by region (base group: Africa, Middle East, and Oceania). ACV = Algebraic Connectivity Vitality (fragility-type: larger = more critical to connectivity); EV = Efficiency Vitality; LC = log(Laplacian Centrality); FB = log(1+Flow Betweenness); WMDZ = Within-Module Degree Z-Score; SE = Shannon Entropy; PC = Participation Coefficient. $^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.10$.
+\end{minipage}
+\end{table}

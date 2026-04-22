@@ -1,0 +1,42 @@
+%% Table 3: Double Machine Learning Results (Global and Americas)
+
+\begin{table}[!htbp]
+\centering
+\caption{Double Machine Learning Estimates: Government Populism and GVC Resilience}
+\label{tab:dml}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lC{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Group 1: Structure}} & \multicolumn{2}{c}{\textbf{Group 2: Position}} & \multicolumn{2}{c}{\textbf{Group 3: Embedding}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8}
+& ACV & EV & LC & FB & WMDZ & SE & PC \\
+\midrule
+
+\multicolumn{8}{l}{\textit{Panel A: Global Sample (N = 1,689; Countries = 73)}} \\[2pt]
+Populism$_{t-1}$ &
+  0.000 & 0.000 & 0.042 & 0.058$^{*}$ & $-$0.018 & 0.016$^{*}$ & 0.011 \\
+& (0.002) & (0.000) & (0.037) & (0.031) & (0.021) & (0.009) & (0.010) \\[4pt]
+R$^2$ & 0.764 & 0.944 & 0.466 & 0.496 & 0.514 & 0.720 & 0.370 \\
+
+\midrule
+\multicolumn{8}{l}{\textit{Panel B: Americas Subsample (N = 193; Countries = 8)}} \\[2pt]
+Populism$_{t-1}$ &
+  $-$0.004 & $-$0.001 & $-$0.030 & 0.066 & $-$0.191$^{*}$ & 0.057$^{**}$ & 0.039$^{**}$ \\
+& (0.004) & (0.004) & (0.073) & (0.045) & (0.091) & (0.023) & (0.012) \\[4pt]
+R$^2$ & 0.179 & 0.881 & 0.576 & 0.573 & 0.207 & 0.813 & 0.567 \\
+
+\midrule
+\multicolumn{8}{l}{\textit{Common features (both panels)}} \\
+& \multicolumn{7}{c}{Partial-linear DML; treatment: Populism$_{t-1}$} \\
+& \multicolumn{7}{c}{Nuisance: $Y_{t-1}$, $\ln$GDP$_{t-1}$, $\ln$Trade$_{t-1}$, $\text{asinh}$FDI$_{t-1}$, $\text{asinh}\widetilde{\text{Inflation}}_{t-1}$, country \& year FEs} \\
+& \multicolumn{7}{c}{Cross-fitting with 5 folds; regularized regression for nuisance estimation} \\
+
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize
+\textit{Notes}: Each cell reports the DML estimate $\hat{\theta}$ of the partial effect of lagged government populism, with clustered standard errors in parentheses. Panel A uses the full 73-country global sample; Panel B is restricted to 8 Western Hemisphere economies. ACV = Algebraic Connectivity Vitality; EV = Efficiency Vitality; LC = log(Laplacian Centrality); FB = log(1+Flow Betweenness); WMDZ = Within-Module Degree Z-Score; SE = Shannon Entropy; PC = Participation Coefficient. $^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.10$.
+\end{minipage}
+\end{table}

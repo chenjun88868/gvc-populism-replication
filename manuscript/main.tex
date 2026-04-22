@@ -1,0 +1,532 @@
+%% ============================================================
+%% Populism and the Reconfiguration of GVC Resilience
+%% APSR Format — Compile with XeLaTeX or pdfLaTeX
+%% Requires: natbib, booktabs, amsmath, geometry, setspace,
+%%           graphicx, longtable, lscape, caption, hyperref
+%% Bibliography file: references.bib
+%% Bibliography style: apalike (author-year, APSR-compatible)
+%% ============================================================
+
+\documentclass[12pt]{article}
+
+%% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{natbib}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{adjustbox}
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+
+%% Line spacing (APSR requires double-spacing)
+\doublespacing
+
+%% Caption formatting
+\captionsetup{font=small, labelfont=bf, justification=raggedright, singlelinecheck=false}
+\captionsetup[table]{position=above}
+
+%% Natbib settings: APSR author-year citations (no comma between author and year)
+\bibpunct{(}{)}{;}{a}{}{,}
+
+%% New column type for centered fixed-width
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\begin{document}
+
+%% ============================================================
+%% TITLE PAGE
+%% ============================================================
+
+\begin{titlepage}
+\begin{center}
+\vspace*{2cm}
+{\Large \textbf{Populism and the Reconfiguration of Global Value Chain Resilience: \\[0.5em]
+Structural Embeddedness, Diversification, and Heterogeneity}}
+
+\vspace{2cm}
+{\normalsize \textit{Anonymous submission for peer review}}
+
+\vspace{3cm}
+\textbf{Abstract}
+\end{center}
+
+\noindent
+Does government populism weaken the resilience of global value chain (GVC) networks? Drawing on a balanced panel of 73 economies observed from 1995 to 2019, this paper addresses that question using seven node-level indicators that capture structurally distinct dimensions of GVC resilience: anti-fragmentation capacity, efficiency contribution, flow intermediation, partner diversification, cross-community reach, local structural embeddedness, and broad network centrality. The indicators are organized into three groups---Network Structure Contribution, Positional Role, and Embedding Pattern---to reflect the qualitatively different mechanisms through which a node can matter to network resilience. All specifications include a lagged dependent variable to account for the high persistence of network positions. The baseline dynamic panel finds a consistent positive association between government populism and Shannon entropy: populist incumbency is robustly associated with greater partner diversification. Conditional-effect models reveal that the consequences of populism are concentrated in the Americas, where the regional interaction terms indicate that populism is associated with higher partner diversification and cross-community reach but significantly lower broad structural centrality (Laplacian centrality). Double Machine Learning estimates corroborate these patterns in the global and regional subsamples. The mechanism analysis proceeds in two steps. First, rule-based governance mediates part of the populism effect on network structure: higher populism predicts weaker rule-based governance (\textit{p} $<$ 0.01), and better governance independently sustains several dimensions of structural embeddedness in the DML framework. Second, a test of the policy uncertainty channel (World Uncertainty Index) finds no significant first-stage relationship between populism and WUI at the annual level, suggesting that the institutional erosion channel---rather than aggregate policy uncertainty---is the more proximate mechanism. Taken together, the evidence indicates that populism reshapes GVC network position rather than dissolving external ties: countries under populist incumbency tend to diversify outward while losing depth and structural centrality in the global production network.
+
+\vspace{0.5cm}
+\noindent \textbf{Keywords:} populism; global value chains; network resilience; complex network analysis; dynamic panel; double machine learning; rule-based governance
+
+\end{titlepage}
+
+\newpage
+\setcounter{page}{1}
+
+%% ============================================================
+\section{Introduction}
+%% ============================================================
+
+The simultaneous rise of populist governments and the disruption of global value chains (GVCs) over the past two decades raises a question that sits at the intersection of international political economy and comparative politics: do they have anything to do with each other? Populism has reshaped governments across Europe, the Americas, and Asia \citep{norrisinglehart2019, muddekaltwasser2017, guriev2022}. At the same time, GVCs---the cross-border production networks through which components, tasks, and value-added are distributed across countries and firms---have been subjected to growing political pressure, supply-chain shocks, and structural reorganization \citep{antras2020, worldbank2020, oecd2021resilience}. Whether and how these two trends interact remains poorly understood.
+
+This paper asks one focused question: does government populism weaken GVC resilience? The question is motivated by a theoretical argument about the institutional foundations of cross-border production. GVCs are not simply driven by comparative advantage or factor endowments. They depend on expectations about policy stability, institutional predictability, and the durability of cross-border commitments \citep{gereffi2005, antras2013, north1990}. Populist governments, by their constitutive logic, tend to challenge the institutional frameworks through which such commitments are made and maintained \citep{mudde2004, funke2020, bermeo2016}. If firms and foreign partners begin to revise their assessments of a country's institutional credibility, the resulting adjustments may manifest not in immediate trade collapse but in a gradual reorganization of a country's structural position in the production network---long before aggregate trade volumes reflect the shift.
+
+The argument is therefore not that populism simply reduces trade. The existing literature has documented the electoral and demand-side channels through which trade shocks and globalization feed into political polarization and populist voting \citep{autor2020, colantone2018apsr, colantone2018ajps, rogowski1987, margalit2011}. A smaller literature examines how populist governments respond once in office, finding that they tend to increase macroeconomic instability \citep{dornbusch1991, funke2020}, weaken institutional constraints \citep{funke2016, bermeo2016, levitskyloxton2013}, and generate policy uncertainty \citep{baker2016, bloom2009}. But almost no work asks what populist incumbency does to a country's structural position within the international production network---its degree of connectivity, its intermediation capacity, its cross-community reach, and its embeddedness in the architecture of global trade.
+
+This paper fills that gap by treating the populism-GVC nexus as a network question rather than a conventional macroeconomic one. Instead of relying on aggregate trade ratios or export growth, the study uses country-level node indicators that capture qualitatively distinct dimensions of GVC resilience: how much a country's removal would damage network connectivity (algebraic connectivity vitality), how much it sustains global efficiency (efficiency vitality), how important it is as a flow intermediary (flow betweenness), how diversified its external ties are (Shannon entropy), how broadly its links span across communities (participation coefficient), how central it is within its own cluster (within-module degree z-score), and how much it contributes to overall network organization (Laplacian centrality). By organizing these seven indicators into three conceptual groups---Network Structure Contribution, Positional Role, and Embedding Pattern---the paper moves beyond single-statistic assessments of resilience and toward a multidimensional characterization of how countries are embedded in global production.
+
+The empirical analysis proceeds as a cumulative sequence. A dynamic panel model with two-way fixed effects and a lagged dependent variable provides the baseline test, accounting for the high persistence of network positions and reducing bias from time-invariant heterogeneity \citep{nickell1981, arellano1991}. Conditional-effect models then introduce interactions between populism and economic openness, democracy, and region, asking under what conditions the consequences of populism become most visible. Double Machine Learning (DML) estimates \citep{chernozhukov2018, belloni2014} complement the interaction analysis by relaxing linearity assumptions and allowing for flexible control specifications. Finally, a two-step mechanism analysis assesses whether the effects of populism operate through institutional erosion (rule-based governance, measured by the V-Dem \texttt{v2x\_rule} index) or through macroeconomic policy uncertainty (the World Uncertainty Index, WUI).
+
+The paper makes four contributions. First, it shifts attention from trade volumes to network resilience, capturing the structural consequences of populism that may predate any change in aggregate trade. Second, it establishes that the populism-resilience relationship is heterogeneous: concentrated in the Americas, conditional on openness, and differentiated across dimensions of network position. Third, it provides evidence for the institutional erosion channel: rule-based governance serves as a significant partial mediator of the populism-GVC association, while the policy uncertainty channel (WUI) does not find support in the first-stage estimation. Fourth, it demonstrates that dynamic specifications substantially change the inference from static models, confirming the importance of accounting for the persistence of network positions.
+
+The main finding is nuanced. Populism does not simply dissolve GVC participation or uniformly reduce resilience. Rather, it reshapes network position: countries under populist incumbency tend to diversify their external ties (higher Shannon entropy), especially in the Americas, while simultaneously losing structural centrality and depth (lower Laplacian centrality). This pattern is consistent with a reorganization of GVC participation---from a more embedded, structurally important position to a more dispersed but shallower one---rather than a straightforward exit from the network.
+
+\subsection*{Contributions to the Literature}
+
+This paper connects and contributes to four distinct bodies of scholarship.
+
+The first is the political economy of populism. A large literature documents the domestic political and economic consequences of populist governance \citep{guriev2022, funke2020, dornbusch1991}. Populism tends to undermine fiscal discipline \citep{funke2016}, erode institutional constraints \citep{bermeo2016, levitskyloxton2013}, amplify policy uncertainty \citep{baker2016, julio2012}, and weaken the rule of law \citep{north1990, acemoglu2001}. However, most of this literature focuses on domestic macroeconomic outcomes and electoral politics. The international economic consequences of populism---specifically its effects on a country's structural position in cross-border production networks---have received far less systematic attention. \citet{rodrik2018} argues that populism reflects the political backlash against hyperglobalization, implying a tension between populist governance and deep participation in GVCs, but this theoretical claim has not been tested using network indicators. This paper provides that test.
+
+The second body of literature concerns GVCs and their political foundations. Since the seminal work of \citet{gereffi2005} on the governance of global value chains, a substantial literature has examined how firms coordinate production across borders \citep{antras2013, johnson2012, hummels2001, koopman2014, amador2016}. \citet{baldwin2016} argues that GVCs represent a qualitative shift in the organization of global production, binding countries into complex interdependencies that depend on stable policy environments. More recent work has turned to the resilience of these networks under various types of shocks \citep{miroudot2020, boehm2019, carvalho2016, antras2020}. However, this literature has largely treated resilience as a response to economic shocks (natural disasters, financial crises) rather than as a function of the domestic political environment. This paper introduces domestic political factors---specifically populist incumbency---as determinants of GVC network position, connecting the GVC literature to the comparative politics of economic policymaking.
+
+The third literature concerns network resilience and complex network analysis. The study draws on concepts from network science---including algebraic connectivity, community structure, betweenness centrality, and Laplacian energy---to operationalize resilience in a multidimensional way \citep{albert2002, newman2010, buldyrev2010, gao2016, acemoglu2012}. The application of these concepts to the analysis of global trade and production networks follows a growing interdisciplinary tradition \citep{carvalho2014, digiovanni2018, watts1998, newmangirvan2004}. Crucially, the paper distinguishes among types of resilience rather than collapsing them into a single measure: anti-fragmentation capacity, efficiency, intermediation, diversification, and structural embeddedness are treated as conceptually distinct even if empirically correlated. This distinction matters because, as the results show, populism can simultaneously increase diversification and reduce structural embeddedness---a finding that would be obscured by any single-index approach.
+
+The fourth literature concerns institutions, rule of law, and economic outcomes \citep{north1990, acemoglu2001, kaufmann2010, hallsoskice2001}. The mechanism analysis in this paper focuses on rule-based governance as a key transmission channel from populism to GVC structure. GVCs depend on institutional predictability---stable rules, credible commitments, and impersonal enforcement of contracts---and populist governments tend to challenge these foundations \citep{funke2016, bermeo2016, ruggie1982}. The V-Dem rule-based governance indicator provides a precise measure of this institutional dimension, enabling a two-step causal pathway test. The paper thus contributes to the broader literature on how domestic political institutions shape the structure of international economic integration \citep{milner1997, buthemilner2008, mansfield2012, frieden1991}.
+
+The remainder of the paper is organized as follows. Section 2 describes the data, sample, and variable construction. Section 3 presents the empirical strategy and baseline results. Section 4 presents the conditional-effect models and DML estimates. Section 5 develops and tests the mechanism arguments. Section 6 concludes.
+
+%% ============================================================
+\section{Data, Sample, and Variable Construction}
+%% ============================================================
+
+\subsection{Sample}
+
+The dataset covers 77 economies observed over 1995--2019. Country coverage spans all major regions: Europe, the Americas, Asia-Pacific, and Africa--Middle East. The country list was fixed in advance based on data availability in the World Input-Output Database (WIOD), the V-Dem dataset, and the World Development Indicators (WDI). The geographic distribution of the 77 countries is shown in Figure 1.
+
+Because the dynamic panel specifications require both lagged dependent variables and lagged control variables, the effective common regression sample is smaller than the 77-country universe. The main OLS and DML specifications are estimated on 1,689 country-year observations from 73 countries, covering the period 1995--2019 after accounting for initial lags.
+
+\subsection{Independent Variable: Government Populism}
+
+The main explanatory variable is government populism, defined as the seat-weighted average of the populism scores of parties in the governing coalition. This construction has three advantages over a simple party-system average. First, it isolates the ideological orientation of parties that actually hold governing authority and can translate ideological preferences into policy. Second, it reflects the composition of coalition governments realistically, weighting member parties according to their parliamentary seat shares. Third, it aligns the theoretical mechanism with the relevant political actors: changes in GVC positions and network resilience are more plausibly driven by the policy choices of incumbents than by the average ideological profile of all parliamentary parties.
+
+Formally, let $v2xpa\_popul_{p,i,t}$ denote the populism score of party $p$ in country $i$ at year $t$, and let $SeatShare_{p,i,t}$ denote that party's parliamentary seat share. The raw government populism score is:
+\begin{equation}
+Populism^{raw}_{i,t} = \frac{\sum_{p \in Gov_{i,t}} v2xpa\_popul_{p,i,t} \cdot SeatShare_{p,i,t}}{\sum_{p \in Gov_{i,t}} SeatShare_{p,i,t}}
+\end{equation}
+
+Because V-Dem party-level data are primarily recorded at election years, this value is carried forward until the next election. The resulting annual series $Populism_{i,t}$ is then lagged by one period in the main regressions: the explanatory variable is $Populism_{i,t-1}$. Populism scores are drawn from the V-Dem Dataset \citep{coppedge2022, pemstein2018, hawkins2009, hawkinsteam2019}.
+
+\subsection{Dependent Variables: Three Dimensions of GVC Resilience}
+
+The dependent variables are seven node-level indicators of GVC network resilience, each estimated annually from the weighted country-to-country GVC network derived from WIOD. Let $G_t$ denote the network in year $t$, and let $G_t^{-i}$ denote the network after removing country $i$. Following \citet{newman2010}, \citet{albert2002}, and \citet{gao2016}, these indicators are organized into three conceptual groups that reflect distinct mechanisms through which a node can matter to network resilience.
+
+\subsubsection*{Group 1: Network Structure Contribution}
+
+These indicators measure how important a node is to the operation of the network as a whole. Higher values indicate that the node is more structurally critical---its removal would cause greater disruption to network connectivity or efficiency.
+
+\paragraph{Algebraic Connectivity Vitality (ACV).} Let $\lambda_2(G)$ denote the second-smallest eigenvalue of the Laplacian matrix of network $G$, known as the Fiedler value \citep{fiedler1973}. The algebraic connectivity vitality of node $i$ is:
+\begin{equation}
+ACV_i = \lambda_2(G) - \lambda_2(G^{-i})
+\end{equation}
+This indicator measures how much overall network connectivity deteriorates when country $i$ is removed. A larger value means that the node is more important for preventing fragmentation. Because this is a loss-based vitality measure, larger raw values indicate that the network is more structurally dependent on the node.
+
+\paragraph{Efficiency Vitality (EV).} Let $E(G) = \frac{1}{n(n-1)}\sum_{j \neq k} \frac{1}{d_{jk}}$ denote the global efficiency of the network \citep{latora2001}, where $d_{jk}$ is the shortest-path distance between nodes $j$ and $k$. The efficiency vitality is:
+\begin{equation}
+EV_i = E(G) - E(G^{-i})
+\end{equation}
+This indicator captures the contribution of country $i$ to maintaining the smooth functioning of the network as a whole.
+
+\paragraph{Laplacian Centrality (LC).} Let $EE(G) = \sum_k \lambda_k^2$ denote the Laplacian energy of the network, where $\lambda_k$ are the eigenvalues of the Laplacian matrix \citep{qi2010}. The Laplacian centrality of country $i$ is:
+\begin{equation}
+LC_i = EE(G) - EE(G^{-i})
+\end{equation}
+This indicator measures how much the overall structural energy of the network declines when country $i$ is removed, capturing the node's contribution to the broader organization of the network \citep{lu2016}. In the regression dataset, this variable is log-transformed: $\log(LC_i)$.
+
+\subsubsection*{Group 2: Positional Role}
+
+These indicators measure the structural role a node plays in network flows---specifically, whether it acts as a bridge, intermediary, or local hub.
+
+\paragraph{Flow Betweenness (FB).} Let $f_{jk}$ denote the maximum flow between nodes $j$ and $k$, and let $f_{jk}^{(i)}$ denote the share of that flow passing through node $i$ \citep{freeman1991, borgatti2005}. The flow betweenness is:
+\begin{equation}
+FB_i = \sum_{j \neq k \neq i} f_{jk}^{(i)}
+\end{equation}
+This indicator captures whether a country occupies a pivotal throughput position in cross-border production linkages---what might be called a ``tollway'' position in the GVC network. In the regression dataset, this variable is entered as $\log(1 + FB_i)$ to reduce skewness.
+
+\paragraph{Within-Module Degree Z-Score (WMDZ).} Let $C_i$ denote the community (module) to which country $i$ belongs, identified by the Louvain modularity algorithm \citep{newmangirvan2004, guimeraamaral2005}. The within-module degree z-score is:
+\begin{equation}
+WMDZ_i = \frac{k_i^{(C_i)} - \bar{k}^{(C_i)}}{\sigma_{k^{(C_i)}}}
+\end{equation}
+where $k_i^{(C_i)}$ is the within-community strength of node $i$ and $\bar{k}^{(C_i)}$ and $\sigma_{k^{(C_i)}}$ are the mean and standard deviation of within-community strength across nodes in the same community. Higher values indicate that the country plays a more central role inside its own production cluster---a local structural hub.
+
+\subsubsection*{Group 3: Embedding Pattern}
+
+These indicators describe how a node's connections are distributed---whether they are concentrated in a few partners or dispersed across many, and whether they span multiple communities.
+
+\paragraph{Shannon Entropy (SE).} Let $w_{ij}$ denote the weight of country $i$'s links to country $j$ \citep{shannon1948}. The Shannon entropy is:
+\begin{equation}
+SE_i = -\sum_{j \neq i} \frac{w_{ij}}{W_i} \log\left(\frac{w_{ij}}{W_i}\right)
+\end{equation}
+where $W_i = \sum_j w_{ij}$ is the total weighted degree of country $i$. This indicator measures how diversified country $i$'s GVC ties are across partners. A larger value means that the country's external linkages are distributed more evenly rather than concentrated in a small number of partners. In resilience terms, higher entropy indicates greater redundancy and lower dependence on any single connection.
+
+\paragraph{Participation Coefficient (PC).} Let $W_i^{(c)}$ denote the strength of country $i$'s ties to community $c$. The participation coefficient is:
+\begin{equation}
+PC_i = 1 - \sum_{c} \left(\frac{W_i^{(c)}}{W_i}\right)^2
+\end{equation}
+This indicator measures the extent to which a country connects across different network communities rather than remaining confined within one module \citep{guimeraamaral2005}. A higher value indicates greater cross-community embeddedness and more diversified structural exposure, which is relevant to resilience because it implies broader access to alternative network neighborhoods.
+
+Together, these three groups capture complementary aspects of GVC resilience that are often conflated in single-measure approaches. A country may simultaneously become more diversified in its embedding pattern while losing structural importance in its contribution to network cohesion---a combination that is central to the empirical findings of this paper.
+
+\subsection{Control Variables}
+
+All regressions control for four lagged macroeconomic covariates from the World Development Indicators (WDI). Economic size is measured by $\log(\text{GDP}_{i,t-1})$. External openness is measured by $\log(\text{TradeOpenness}_{i,t-1})$, where trade openness is the ratio of trade to GDP. Cross-border capital exposure is measured by $\text{asinh}(\text{FDI}_{i,t-1})$, using the inverse hyperbolic sine transformation because FDI can take negative values. Macroeconomic instability is measured by $\text{asinh}(\widetilde{\text{Inflation}}_{i,t-1})$, where $\widetilde{\text{Inflation}}$ denotes the inflation rate winsorized at the 1st and 99th percentiles. All controls are lagged by one year to reduce simultaneity and to align macroeconomic conditions temporally with subsequent network outcomes. The democracy variable used in the interaction models is V-Dem's electoral democracy index (polyarchy, \texttt{v2x\_polyarchy}).
+
+%% ============================================================
+\section{Empirical Strategy and Baseline Results}
+%% ============================================================
+
+\subsection{The Dynamic Panel Specification}
+
+A fundamental feature of GVC network positions is their high persistence over time. Countries that are structurally central in one year tend to remain structurally central the following year; the adjustment of network roles is gradual rather than abrupt. This persistence creates both an opportunity and a challenge for identification. If a static fixed-effects regression omits the lagged dependent variable when that variable is serially correlated, the estimated coefficients on time-varying regressors---including government populism---will be biased \citep{nickell1981}. To address this, the baseline specification is a dynamic two-way fixed-effects model:
+
+\begin{equation}
+\label{eq:main}
+Y_{i,t} = \rho Y_{i,t-1} + \beta \, Populism_{i,t-1} + \gamma' \mathbf{X}_{i,t-1} + \mu_i + \lambda_t + \varepsilon_{i,t}
+\end{equation}
+
+where $Y_{i,t}$ is one of the seven GVC resilience indicators, $Y_{i,t-1}$ is its lagged value (the dynamic term), $Populism_{i,t-1}$ is lagged government populism, $\mathbf{X}_{i,t-1}$ is the vector of lagged macroeconomic controls, $\mu_i$ denotes country fixed effects, $\lambda_t$ denotes year fixed effects, and $\varepsilon_{i,t}$ is the error term. Standard errors are clustered at the country level throughout.
+
+The lagged dependent variable $Y_{i,t-1}$ serves multiple purposes. First, it explicitly models the persistence of network positions, capturing the mean-reversion dynamics that characterize structural network roles. Second, it purges the regression of the component of current outcomes explained by past outcomes, isolating the variation attributable to current political and macroeconomic inputs. Third, it addresses potential Nickell bias in short panels, reducing the estimation of static fixed-effects models as a benchmark for effects that are inherently dynamic \citep{nickell1981, arellano1991, blundellbond1998}.
+
+The parsimonious specification (M1) includes only the lagged dependent variable, lagged government populism, country fixed effects, and year fixed effects. The main specification (M2) adds $\log(\text{GDP})$, $\log(\text{TradeOpenness})$, and $\text{asinh}(\text{FDI})$ as controls. The full specification (M3) additionally controls for $\text{asinh}(\widetilde{\text{Inflation}})$.
+
+\subsection{Baseline Average-Effect Results}
+
+Table 1 reports the baseline results. The most immediate finding is that the inclusion of the lagged dependent variable substantially changes the inference from a static model. The estimated persistence parameters $\hat{\rho}$ range from 0.618 (participation coefficient) to 0.990 (efficiency vitality), confirming that network positions are highly persistent and that a dynamic specification is essential for credible identification.
+
+Across all three specifications and all seven outcome indicators, the coefficient on lagged government populism is statistically insignificant for six of the seven outcomes. The one exception is Shannon entropy: the coefficient is positive and significant at $p < 0.10$ in M1 ($\hat{\beta} = 0.017$, SE $= 0.009$) and M2 ($\hat{\beta} = 0.018$, SE $= 0.009$), and at $p < 0.05$ in the full specification M3 ($\hat{\beta} = 0.019$, SE $= 0.009$). This result is robust to the inclusion of successive controls and consistent in sign and magnitude across all three specifications. Substantively, it indicates that higher government populism is associated with a statistically significant increase in partner diversification.
+
+This finding is theoretically important because it qualifies any expectation of an unambiguously negative populism effect on GVC resilience. If populism were simply eroding structural position across the board, one would expect negative and significant coefficients on multiple indicators. That pattern does not emerge in the dynamic baseline. Instead, the only consistent association is that populism coincides with greater diversification---a reshuffling of network ties toward a more dispersed distribution rather than a contraction of external linkages.
+
+The absence of a broad negative effect motivates the next step of the analysis: examining whether the consequences of populism are concentrated in particular countries or under particular conditions. Theoretically, the effects of populism should not be uniform across all contexts. Their severity is likely to depend on a country's exposure to international markets, the domestic political environment that conditions the translation of populist rhetoric into policy, and the regional production-network structure in which a country is embedded.
+
+\input{table1.tex}
+
+\subsection{Conditional-Effect Models}
+
+\subsubsection*{Populism and Trade Openness}
+
+The first heterogeneity test examines whether the consequences of populism are more severe in countries more deeply integrated into international markets. The regression model is:
+
+\begin{equation}
+\label{eq:openness}
+\begin{split}
+Y_{i,t} = \rho Y_{i,t-1} + \beta_1 \, Populism_{i,t-1}
+  &+ \beta_2 \, (Populism_{i,t-1} \times Openness_{i,t-1}) \\
+  &+ \beta_3 \, Openness_{i,t-1} + \gamma' \mathbf{X}_{i,t-1} + \mu_i + \lambda_t + \varepsilon_{i,t}
+\end{split}
+\end{equation}
+
+The interaction coefficient $\beta_2$ tests whether the association between populism and GVC resilience becomes more pronounced as countries become more exposed to international markets.
+
+The results, reported in the first panel of Table 2, show a marginally significant positive interaction between government populism and trade openness for algebraic connectivity vitality: $\hat{\beta}_2 = 0.005$ ($p = 0.051$). Because ACV is a fragility-type indicator---larger values indicate that network connectivity suffers more when the node is removed---this result implies that the structural cost of populism increases with trade openness. In highly open economies, populist incumbency is associated with a sharper deterioration of the country's role in supporting network cohesion.
+
+No significant interactions are found for the remaining six outcomes. The diversification-related indicators (Shannon entropy, participation coefficient) do not show significantly stronger responses to populism in more open economies, suggesting that the diversification effect identified in the baseline operates independently of trade openness.
+
+\subsubsection*{Populism and Democracy}
+
+The second heterogeneity test examines whether the effects of populism are conditioned by democratic context. In more democratic settings, populist governments may generate stronger uncertainty because policy change is more visible, electoral competition amplifies policy swings, and coalition instability is more legible to international partners \citep{bermeo2016, norrisinglehart2019}. The regression model is:
+
+\begin{equation}
+\label{eq:democracy}
+\begin{split}
+Y_{i,t} = \rho Y_{i,t-1} + \beta_1 \, Populism_{i,t-1}
+  &+ \beta_2 \, (Populism_{i,t-1} \times Polyarchy_{i,t-1}) \\
+  &+ \beta_3 \, Polyarchy_{i,t-1} + \gamma' \mathbf{X}_{i,t-1} + \mu_i + \lambda_t + \varepsilon_{i,t}
+\end{split}
+\end{equation}
+
+Table 2 (middle panel) shows that none of the interaction terms between populism and democracy reach conventional significance thresholds. The direction of most democracy interactions is consistent with theoretical priors---negative for structural embeddedness indicators, positive for diversification---but the estimates are imprecise. This null result does not necessarily mean that democratic context is irrelevant; it may instead reflect insufficient statistical power to identify conditional effects given the high persistence of outcomes and the relatively limited within-country variation in democracy scores over the sample period.
+
+\subsubsection*{Populism and Region}
+
+The third heterogeneity model allows the slope on government populism to vary across broad world regions. GVC networks are not spatially homogeneous: countries enter global production from different regional positions, under different dependence structures, and with different exposure to regional hubs and production blocs \citep{gereffi2014, coe2015}. The regression model is:
+
+\begin{equation}
+\label{eq:region}
+\begin{split}
+Y_{i,t} = \rho Y_{i,t-1}
+  &+ \sum_{r} \delta_r \, (Populism_{i,t-1} \times Region_r) + \beta \, Populism_{i,t-1} \\
+  &+ \gamma' \mathbf{X}_{i,t-1} + \mu_i + \lambda_t + \varepsilon_{i,t}
+\end{split}
+\end{equation}
+
+where $Region_r$ is a time-invariant binary indicator for three broad regions (Europe, Asia, Americas), with the remaining countries serving as the base group.
+
+Table 2 (lower panel) shows that the most consistent and statistically significant results appear in the Americas. Four interaction terms between government populism and the Americas region are statistically significant:
+
+\begin{itemize}
+  \item \textit{Efficiency Vitality $\times$ Americas}: $\hat{\delta} = -0.001$ ($p = 0.013$, $**$). In the Americas, populism is associated with reduced contribution to global network efficiency---a result that does not appear in other regions.
+
+  \item \textit{Flow Betweenness $\times$ Americas}: $\hat{\delta} = 0.068$ ($p = 0.084$, $*$). Populism in the Americas is marginally associated with higher flow intermediation, suggesting some restructuring of throughput roles.
+
+  \item \textit{Shannon Entropy $\times$ Americas}: $\hat{\delta} = 0.072$ ($p < 0.001$, $***$). Populism in the Americas is strongly associated with greater partner diversification, consistent with the baseline finding but substantially stronger in this regional subsample.
+
+  \item \textit{Participation Coefficient $\times$ Americas}: $\hat{\delta} = 0.042$ ($p = 0.001$, $***$). Populism in the Americas is also associated with greater cross-community connectivity.
+
+  \item \textit{Laplacian Centrality $\times$ Americas}: $\hat{\delta} = -0.090$ ($p = 0.007$, $***$). This is a substantively large and statistically strong result: populism in the Americas is associated with a significantly lower contribution to the structural organization of the overall GVC network.
+\end{itemize}
+
+Taken together, these regional results present a coherent picture: in the Americas, populism is associated simultaneously with greater diversification (Shannon entropy, participation coefficient) and lower structural centrality (Laplacian centrality, efficiency vitality). This combination---more dispersed external ties but weaker structural depth---is exactly the pattern of ``compensatory diversification'' that the paper's theoretical framework predicts: countries may spread their connections more widely as their structural centrality erodes.
+
+\input{table2.tex}
+
+\subsubsection*{Are the Americas Results Outlier-Driven?}
+
+Because the region interactions are most pronounced in the Americas, it is important to assess whether those estimates are merely artifacts of a few extreme observations. The descriptive evidence suggests that the answer is no. The pattern is better characterized as regionally concentrated and subset-driven than as a single-country or single-year outlier story.
+
+Figures \ref{fig:americas_popgov_heatmap} and \ref{fig:americas_popgov_trend} make this point in two complementary ways. Figure \ref{fig:americas_popgov_heatmap} plots the country-year heatmap of lagged government populism for the M3 sample. If the Americas result were driven by only one or two exceptional observations, we would expect to see isolated spikes concentrated in a handful of country-years. Instead, the heatmap shows that elevated populism in the Americas is distributed across multiple countries and often persists over several consecutive years. Figure \ref{fig:americas_popgov_trend} complements that picture by plotting the regional median and interquartile range of lagged populism. The Americas do not stand out because of one-off surges alone; rather, they exhibit a persistently higher and more variable level of populism than other regions over long stretches of the sample period.
+
+This descriptive pattern is reinforced by the regression diagnostics in Figure \ref{fig:americas_influence}. The Cook's distance / leverage plot for the Populism $\times$ Americas specification shows that the largest influence points and the highest-leverage observations are not primarily from the Americas. The most influential observations are concentrated in Africa--Middle East and, to a lesser extent, Europe and Asia, while the Americas observations cluster in the low-to-moderate influence range. In other words, the significant Americas correlation is not being mechanically pulled by one or two country-years with extreme influence. At the same time, the figure also counsels against an overly strong claim of uniformity: the effect is not equally strong in every Americas country-year. The most accurate conclusion is therefore that the Americas result reflects a broader regional pattern that is not reducible to a few extreme outliers, even though it is more concentrated in some countries and periods than in others.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{figures/popgov_americas_heatmap.png}
+\caption{Country-year heatmap of lagged government populism in the M3 sample. Elevated populism in the Americas appears across multiple countries and persists over consecutive years rather than being concentrated in only a few observations.}
+\label{fig:americas_popgov_heatmap}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/popgov_region_trend.png}
+\caption{Regional median trend with interquartile spread of lagged government populism. The Americas show persistently elevated and comparatively more variable populism over time.}
+\label{fig:americas_popgov_trend}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/popxamericas_influence.png}
+\caption{Influence diagnostics for the Populism $\times$ Americas interaction model. Red points are Americas country-years. Bubble size is proportional to Cook's distance.}
+\label{fig:americas_influence}
+\end{figure}
+
+\subsection{Double Machine Learning Estimates}
+
+The preceding OLS interaction models impose linearity in the control specification and may be sensitive to functional form. To assess robustness under a more flexible estimation framework, I estimate partial-linear Double Machine Learning (DML) models \citep{chernozhukov2018, belloni2014}:
+
+\begin{equation}
+\label{eq:dml}
+Y_{i,t} = \theta \cdot Populism_{i,t-1} + g(\mathbf{W}_{i,t-1}) + \varepsilon_{i,t}
+\end{equation}
+
+where $\mathbf{W}$ contains the lagged dependent variable, macroeconomic controls, and high-dimensional country and year indicators. The parameter of interest $\theta$ is the partial effect of populism after flexibly purging the confounding influence of $\mathbf{W}$. The unknown function $g(\cdot)$ and the corresponding propensity function $m(\cdot)$ (from the first-stage regression of populism on $\mathbf{W}$) are estimated using regularized machine learning methods, and the coefficient of interest is recovered from the residual-on-residual regression:
+
+\begin{equation}
+\tilde{Y}_{i,t} = \theta \cdot \tilde{Populism}_{i,t-1} + e_{i,t}
+\end{equation}
+
+where $\tilde{Y}_{i,t}$ and $\tilde{Populism}_{i,t-1}$ are the residuals from partialing out $g(\mathbf{W})$ and $m(\mathbf{W})$ respectively.
+
+Table 3 (upper panel) presents the global DML estimates. Two results approach or reach conventional significance. For flow betweenness, $\hat{\theta} = 0.058$ ($p = 0.065$, $*$), a marginally significant positive association. For Shannon entropy, $\hat{\theta} = 0.016$ ($p = 0.081$, $*$), also marginally significant. The remaining five indicators---including within-module degree z-score and Laplacian centrality---are not statistically significant in the global DML. This is a notable difference from what a static fixed-effects model would yield, confirming that the dynamic specification and flexible control strategy together substantially affect the inferences about the populism-structure relationship.
+
+Table 3 (lower panel) presents the Americas subsample DML, estimated on a sample of 193 country-year observations from 8 Western Hemisphere economies. Three results emerge:
+
+\begin{itemize}
+  \item \textit{Shannon Entropy}: $\hat{\theta} = 0.057$ ($p = 0.036$, $**$). A robust and significant positive association between populism and partner diversification in the Americas.
+  \item \textit{Participation Coefficient}: $\hat{\theta} = 0.039$ ($p = 0.011$, $**$). A robust and significant positive association with cross-community reach.
+  \item \textit{Within-Module Degree Z-Score}: $\hat{\theta} = -0.191$ ($p = 0.069$, $*$). A marginally significant negative association, indicating that populism in the Americas is associated with weaker local structural embeddedness.
+\end{itemize}
+
+The Laplacian centrality estimate in the Americas DML is $\hat{\theta} = -0.030$ ($p = 0.692$), not statistically significant at conventional thresholds, though the point estimate is negative and the regional interaction model does show a significant effect. The Americas DML results for diversification (Shannon entropy, participation coefficient) are substantially stronger than their global counterparts, confirming that the Americas is the region where the structural consequences of populism are most concentrated.
+
+Taken together, the DML estimates corroborate the main substantive conclusion of the paper: populism is most robustly and consistently associated with greater partner diversification (Shannon entropy), and this effect is substantially stronger in the Americas. The within-module degree z-score in the Americas provides additional, if more tentative, evidence that the diversification effect coexists with a weakening of local structural embeddedness.
+
+\input{table3.tex}
+
+%% ============================================================
+\section{Mechanism Analysis}
+%% ============================================================
+
+The empirical results consistently show that government populism is associated with greater partner diversification (especially in the Americas) and---through the interaction models and regional DML---with reduced structural centrality. The question that remains is \textit{why}. What is the transmission channel through which populist incumbency reshapes GVC network position? This section develops two theoretical arguments and tests each empirically. The first argument focuses on institutional erosion: populism weakens rule-based governance, and this institutional deterioration undermines the structural quality of a country's participation in GVCs. The second argument focuses on policy uncertainty: populism generates macroeconomic and policy uncertainty, which leads partners and firms to hedge by diversifying their network connections. Each argument generates testable predictions about the intermediate mechanism, and the evidence shows that the institutional channel is supported while the uncertainty channel is not.
+
+\subsection{Theory 1: The Institutional Erosion Channel}
+
+The core of the first theory is rooted in the political logic of populism. Populist actors do not merely advocate for specific redistributive policies or trade protections; they challenge the legitimacy of the institutional order through which policy is made and implemented \citep{mudde2004, laclau2005, weyland2001}. In populist discourse, existing rules and procedures are portrayed as arrangements designed by entrenched elites, technocrats, or globalized interest groups to insulate policy from popular preferences. Once this view is translated into government, the consequential shift is not only in the content of policy but in the \textit{mode of governance}: the governing authority acquires both the motivation and the political justification to bypass established procedures, reinterpret institutional constraints, and govern in a more discretionary manner \citep{funke2016, funke2020, levitskyloxton2013, bermeo2016}.
+
+This institutional shift has direct implications for GVC participation. Cross-border production networks do not depend only on market size, relative wages, or export capacity. They depend critically on the expectation that rules will be applied consistently, that contracts will remain credible, that administrative decisions will not shift unpredictably, and that policy commitments will not be revised abruptly for short-term political reasons \citep{north1990, milner1997, keohane1977, ruggie1982}. For firms embedded in GVCs, what matters is not only whether a country is open today but whether that openness is underwritten by a stable and impersonal institutional framework \citep{antras2013, hallsoskice2001, acemoglu2001}.
+
+Populist incumbents can weaken this institutional foundation even without formally withdrawing from the global economy. If political leaders repeatedly signal that existing rules are obstacles to the popular will---by challenging judicial independence, circumventing regulatory procedures, or reinterpreting trade and investment commitments---foreign partners and multinational firms may begin to treat the institutional environment as less predictable, less credible, and less trustworthy \citep{buthemilner2008, julio2012, bloom2009}. The likely consequence is not an immediate collapse in trade volumes but a gradual erosion of the deep, structurally embedded participation that requires long-term relational investments and institutional predictability. At the same time, firms may compensate by diversifying their supplier and buyer networks---spreading their connections more widely to reduce dependence on any single institutionally unreliable partner.
+
+This argument generates three hypotheses:
+
+\begin{description}
+  \item[H1a] Higher government populism is followed by weaker rule-based governance.
+  \item[H1b] Weaker rule-based governance is associated with reduced structural embeddedness (lower Laplacian centrality, higher fragility) in GVC networks.
+  \item[H1c] The association between populism and GVC outcomes is partially mediated by rule-based governance: adding rule-based governance to the estimation should attenuate the direct populism coefficient.
+\end{description}
+
+\subsection{Theory 2: The Policy Uncertainty Channel}
+
+The second mechanism draws on the extensive literature on economic policy uncertainty and its consequences for investment and economic integration \citep{baker2016, bloom2009, handley2015, julio2012}. Populist governments are characterized by anti-establishment rhetoric, frequent improvisation, and a tendency to reverse or reinterpret prior policy commitments when politically expedient \citep{funke2020, guriev2022, dornbusch1991}. This pattern of governance may generate elevated aggregate policy uncertainty, as measured by indicators such as the World Uncertainty Index (WUI) of \citet{ahir2022}. If uncertainty rises under populist incumbency, firms and trading partners face increased risks in making long-term relational investments in any particular partner country. The rational response---consistent with the logic of option value under uncertainty \citep{bloom2009}---is to diversify connections rather than deepen them, spreading exposure across more partners to preserve flexibility.
+
+This channel predicts a specific empirical pattern. First, populism should predict higher WUI (the first-stage relationship). Second, higher WUI should predict changes in GVC network position---specifically, greater diversification (higher Shannon entropy and participation coefficient) and potentially lower structural centrality (lower Laplacian centrality). Third, once WUI is controlled for, the direct association between populism and GVC outcomes should attenuate.
+
+This generates two hypotheses:
+
+\begin{description}
+  \item[H2a] Higher government populism is followed by higher policy uncertainty (WUI).
+  \item[H2b] Higher policy uncertainty is associated with greater partner diversification and lower structural centrality in GVC networks.
+\end{description}
+
+\subsection{Testing the Institutional Erosion Channel}
+
+\subsubsection*{Step 1: Does Populism Weaken Rule-Based Governance?}
+
+I begin by testing H1a with the following fixed-effects model:
+
+\begin{equation}
+\label{eq:step1}
+Rule_{i,t-1} = \beta \, Populism_{i,t-2} + \delta \, Rule_{i,t-2} + \gamma' \mathbf{X}_{i,t-2} + \mu_i + \lambda_t + \varepsilon_{i,t}
+\end{equation}
+
+where $Rule_{i,t-1}$ is the level of the V-Dem rule-based governance index (\texttt{v2x\_rule}) at $t-1$, and $Populism_{i,t-2}$ is lagged by two periods. This specification preserves the temporal ordering of the mechanism chain---populism at $t-2$ predicts governance at $t-1$, which then precedes GVC outcomes at $t$. The lagged governance level $Rule_{i,t-2}$ captures institutional persistence.
+
+The parsimonious specification (M1) includes only populism (lagged two periods), country fixed effects, and year fixed effects. The main specification (M2) adds $Rule_{i,t-2}$ to account for mean reversion and institutional persistence. The extended specification (M3) additionally includes lagged macroeconomic controls.
+
+Table 4 reports the first-step results for this level specification. The parsimonious model without lagged governance (M1) yields a negative but imprecisely estimated coefficient on populism, $\hat{\beta}_{M1} = -0.010$ (SE $= 0.009$). Once institutional persistence is introduced, however, the effect becomes both stable and statistically significant: $\hat{\beta}_{M2} = -0.005$ (SE $= 0.002$, $p < 0.01$) and $\hat{\beta}_{M3} = -0.005$ (SE $= 0.002$, $p < 0.01$). The coefficient on lagged rule-based governance is positive and extremely large ($\hat{\delta} \approx 0.90$), indicating strong persistence in institutional quality from one period to the next. In substantive terms, conditional on that persistence, higher populism at $t-2$ predicts lower rule-based governance at $t-1$. The extended model also shows that richer and more trade-open economies tend to have slightly lower subsequent rule-based governance in this tightly controlled sample, while FDI and inflation are not statistically distinguishable from zero. Overall, the first-stage evidence is consistent with H1a: populism weakens rule-based governance once prior institutional conditions are taken into account.
+
+\input{table4.tex}
+
+\subsubsection*{Step 2: Does Rule-Based Governance Shape GVC Network Position?}
+
+The second step examines H1b and H1c. Using a DML framework, I estimate three sequential specifications for each GVC outcome:
+
+\begin{align}
+\text{M1 (Populism only):} \quad
+  & Y_{i,t} = \theta_1 \cdot Populism_{i,t-2} + g_1(\mathbf{W}_{i,t}) + e_{i,t} \label{eq:dml1}\\
+\text{M2 (Pop.\ + Governance):} \quad
+  & Y_{i,t} = \theta_2 \cdot Populism_{i,t-2} + g_2(\mathbf{W}_{i,t},\, Rule_{i,t-1}) + e_{i,t} \label{eq:dml2}\\
+\text{M3 (Governance only):} \quad
+  & Y_{i,t} = \alpha \cdot Rule_{i,t-1} + g_3(\mathbf{W}_{i,t},\, Populism_{i,t-2}) + e_{i,t} \label{eq:dml3}
+\end{align}
+
+where $\mathbf{W}$ includes the lagged dependent variable, macroeconomic controls, and high-dimensional fixed effects. Comparing M1 and M2 tests H1c (does populism attenuate?); M3 tests H1b (does governance have an independent effect?).
+
+Table 5 presents the global DML step-two results for selected outcomes. The evidence strongly supports the institutional erosion channel through two indicators:
+
+\begin{itemize}
+  \item \textit{Algebraic Connectivity Vitality (ACV)}: The governance coefficient in M3 is $\hat{\alpha} = -0.027$ ($p < 0.01$, $***$). Because ACV is a fragility-type indicator, this negative coefficient means that better rule-based governance \textit{reduces} the network's dependence on the country for connectivity---making the network more robust. The populism coefficient in M1 is $0.005$ ($p < 0.05$, $**$) but weakens to $0.006$ ($p = 0.106$) in M2 when governance is added to the nuisance function, consistent with partial mediation through the institutional channel.
+
+  \item \textit{Shannon Entropy}: The governance coefficient in M3 is $\hat{\alpha} = 0.096$ ($p < 0.001$, $***$). Better rule-based governance is strongly associated with greater partner diversification---seemingly the opposite of the direct governance hypothesis, but consistent with the interpretation that institutionally credible countries attract more diverse partners. The populism coefficient in M1 is $-0.011$ ($p = 0.146$) and in M2 it is $-0.014$ ($p = 0.086$, $*$), shifting slightly.
+
+  \item \textit{Laplacian Centrality (LC)}: The governance coefficient in M3 is $\hat{\alpha} = 0.205$ ($p < 0.01$, $***$). Better rule-based governance is strongly associated with higher structural centrality in the GVC network. The populism coefficient in M1 is $-0.008$ ($p = 0.651$) and in M2 it is $0.000$ ($p = 0.994$), virtually disappearing once governance is controlled---consistent with populism operating on Laplacian centrality \textit{primarily} through the institutional channel.
+
+  \item \textit{Participation Coefficient (PC)}: The governance coefficient in M3 is $\hat{\alpha} = -0.071$ ($p < 0.001$, $***$). Higher rule-based governance is associated with lower cross-community participation---countries with better governance appear more deeply embedded within their own production clusters rather than spanning many communities. This is consistent with the distinction between structural depth (governance fosters) and horizontal diversification (governance constrains).
+\end{itemize}
+
+In the Americas subsample (Table 5, lower panel), the governance effects are substantively larger, consistent with the regional heterogeneity already identified in Section 3. The governance coefficient for Shannon entropy in the Americas is $\hat{\alpha} = 0.433$ ($p < 0.05$, $**$), for participation coefficient $\hat{\alpha} = 0.067$ ($p < 0.1$, $*$), and for Laplacian centrality $\hat{\alpha} = -1.274$ ($p < 0.05$, $**$). This last result---better governance is associated with \textit{lower} structural centrality in the Americas DML---is the one potentially unexpected finding. It may reflect a regional dynamic in which institutionally stronger countries in the Americas are less central to the regional production hub structure (which is dominated by the US and a few major exporters), while institutionally weaker countries that have historically occupied hub-like positions in the regional network show higher measured centrality precisely because of their structural indispensability despite weak governance. This interpretation deserves further investigation in future work.
+
+\input{table5.tex}
+
+\subsection{Testing the Policy Uncertainty Channel}
+
+The second mechanism proposes that populist governments generate higher policy uncertainty (WUI), which in turn induces firms and partners to diversify their network connections (H2a, H2b). The World Uncertainty Index of \citet{ahir2022} captures the frequency of uncertainty-related keywords in Economist Intelligence Unit reports and provides a cross-national quarterly measure of aggregate policy uncertainty. Following the construction procedure described in the research design, quarterly WUI values are averaged to annual observations, and the annual WUI is log-transformed to address skewness: $M_{i,t} = \log(1 + WUI^{annual}_{i,t})$.
+
+The first step tests H2a by estimating the effect of government populism on subsequent WUI. The specification is analogous to Equation (\ref{eq:step1}) but with $M_{i,t}$ as the outcome and $Populism_{i,t-1}$ as the treatment.
+
+Table 6 reports the results. The first-stage coefficient on government populism is $\hat{\theta} = 0.019$ ($p = 0.508$) and is not statistically significant. This null result is consistent across all seven GVC outcomes (which share the same first-stage estimate), indicating that government populism does not systematically predict higher WUI in this sample. The null first stage means that the WUI mechanism chain---populism $\to$ uncertainty $\to$ GVC restructuring---is not supported empirically. While the individual coefficients in the second-stage regressions show that adding WUI to the nuisance function slightly reduces some populism coefficients, this attenuation is not meaningfully different from zero given the insignificant first stage.
+
+The rejection of H2a does not necessarily mean that populism never generates policy uncertainty. It may mean that WUI---an aggregate newspaper-based index---is too coarse to capture the specific channels of institutional uncertainty that GVC actors respond to. The results suggest that GVC firms and partners are more sensitive to the quality and stability of \textit{rules and institutions} (captured by \texttt{v2x\_rule}) than to aggregate news-based uncertainty (captured by WUI). Future research could explore more disaggregated uncertainty measures---for instance, trade-policy uncertainty indices or investment-contract risk measures---to test whether finer-grained uncertainty measures capture the relevant channel.
+
+\input{table6.tex}
+
+\subsection{Interpretation of the Mechanism Evidence}
+
+The two-step mechanism analysis substantially strengthens the paper's causal interpretation in several ways. The institutional erosion evidence shows:
+
+\begin{enumerate}
+  \item Populist incumbency at $t-2$ is followed by deterioration in rule-based governance at $t-1$ in all three specifications ($p < 0.01$), establishing temporal precedence of the proposed mechanism.
+  \item Rule-based governance at $t-1$ is independently associated with several GVC resilience outcomes at $t$: it reduces network fragility (ACV), sustains structural centrality (Laplacian centrality), and has a complex relationship with diversification (positive for Shannon entropy globally, but large and positive for diversification in the Americas).
+  \item Incorporating governance into the nuisance function attenuates the direct populism effect for Laplacian centrality, consistent with partial mediation.
+\end{enumerate}
+
+In contrast, the policy uncertainty channel is not empirically supported: government populism does not significantly predict WUI, and the second-stage results do not change materially once WUI is added.
+
+The broader implication is that the most plausible causal reading of the evidence runs from populism to institutional erosion to GVC network deterioration. Populist governments erode the rule-based quality of governance, and this institutional deterioration weakens the structural foundations of a country's embedded participation in GVC networks---reducing structural centrality and potentially encouraging compensatory diversification. This is not a story about trade collapse but about structural reorganization.
+
+%% ============================================================
+\section{Conclusion}
+%% ============================================================
+
+This paper has examined whether government populism weakens the resilience of global value chain networks, using a multidimensional set of network indicators organized into three conceptual groups---Network Structure Contribution, Positional Role, and Embedding Pattern---and a dynamic panel specification that accounts for the high persistence of network positions. The main empirical findings can be summarized as follows.
+
+First, the dynamic baseline establishes that the only consistent average association between government populism and GVC resilience is a positive relationship with partner diversification (Shannon entropy). Once lagged network positions are controlled, the simple claim that populism uniformly reduces structural embeddedness is not supported at the global level. Network positions are highly persistent ($\hat{\rho}$ ranging from 0.618 to 0.990), and accounting for this persistence is essential for credible identification.
+
+Second, the conditional-effect models reveal strong regional heterogeneity: the structural consequences of populism are concentrated in the Americas. In that region, populism is associated with greater partner diversification (Shannon entropy, $p < 0.001$), greater cross-community reach (participation coefficient, $p = 0.001$), reduced contribution to global network efficiency (efficiency vitality, $p = 0.013$), and substantially lower broad structural centrality (Laplacian centrality, $p = 0.007$). The DML Americas subsample corroborates the diversification effects (Shannon entropy, $p = 0.036$; participation coefficient, $p = 0.011$) and provides additional evidence for weakened local structural embeddedness (within-module degree z-score, $p = 0.069$).
+
+Third, the mechanism analysis supports the institutional erosion channel and rejects the policy uncertainty channel. Populist incumbency is followed by a significant and consistent deterioration in rule-based governance. Better rule-based governance is independently associated with lower network fragility, higher structural centrality, and a complex relationship with diversification. Incorporating governance into the estimation attenuates the direct populism effect for structural centrality outcomes. By contrast, the policy uncertainty channel (WUI) does not find first-stage support: populism does not significantly predict WUI in this sample.
+
+Fourth, the evidence consistently supports a narrative of \textit{structural reorganization} rather than \textit{network exit}. A country under populist incumbency does not simply leave GVCs. Rather, its network position shifts: it tends to diversify its connections outward while losing depth and structural importance---a combination that may be individually rational for firms and partners seeking to hedge against institutional uncertainty but collectively detrimental to the country's strategic position in the global production architecture.
+
+These findings have implications for several literatures. For the study of populism, the paper shows that the economic consequences of populist governance extend beyond inflation, growth volatility, or fiscal deficits \citep{dornbusch1991, funke2020} to the structural quality of international economic integration. Countries under populist incumbency do not simply become more protectionist; they become less structurally embedded in the global production network. For the GVC literature, the paper shows that resilience is shaped not only by economic shocks \citep{miroudot2020, boehm2019, antras2020} but also by the domestic political environment---specifically, by the quality of rule-based institutional governance. For the political economy of institutions, the paper provides evidence that the erosion of rule-based governance---a common feature of populist incumbency---has measurable consequences for the international economic position of affected countries \citep{north1990, acemoglu2001, ruggie1982}.
+
+Several limitations should be noted. The identification strategy relies on within-country variation in populism over time and accounts for observable macroeconomic confounders, but it cannot rule out all unobserved time-varying factors that might simultaneously drive populist electoral outcomes and network reorganization. The mechanism evidence is consistent with institutional erosion but falls short of a fully credible causal identification of the mediation pathway. The WUI mechanism's null result may reflect a measurement limitation rather than a true null effect. And the Americas subsample results, while consistent across models, involve a relatively small number of countries and should be interpreted with appropriate caution.
+
+Future research should explore more targeted identification strategies---including event-based designs around unexpected populist electoral transitions---to sharpen the causal estimates. Disaggregating the WUI or substituting trade-policy uncertainty measures might recover the policy uncertainty channel with more precision. Extending the analysis to firm-level or bilateral trade data could further elucidate the mechanisms through which GVC partners respond to political signals from incumbent governments. And incorporating more recent data---the post-2019 period, including COVID-19 disruptions and the geopolitical fragmentation of supply chains---would allow the analysis to speak to the most pressing contemporary challenges to GVC resilience \citep{antras2020, worldbank2020, oecd2021resilience}.
+
+The central conclusion is that populism matters for GVC structure---not primarily by severing external ties but by reshaping them. The most accurate description of the populism effect is not network exit but structural reorganization: from deep, institutionally embedded participation toward a more dispersed but shallower network profile. This is the political-economy implication of the paper, and it suggests that the long-run costs of populist governance for economic performance may be felt not in immediate trade collapse but in the gradual erosion of the structural foundations of productive international engagement.
+
+%% ============================================================
+%% BIBLIOGRAPHY
+%% ============================================================
+
+\clearpage
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\clearpage
+
+%% ============================================================
+%% TABLES
+%% ============================================================
+
+% Table 1: Baseline Dynamic Panel Results
+\input{table1.tex}
+
+\clearpage
+
+% Table 2: Conditional-Effect Models
+\input{table2.tex}
+
+\clearpage
+
+% Table 3: DML Results
+\input{table3.tex}
+
+\clearpage
+
+% Table 4: Step 1 Mechanism (Populism -> Governance)
+\input{table4.tex}
+
+\clearpage
+
+% Table 5: Step 2 Mechanism (Governance -> GVC)
+\input{table5.tex}
+
+\clearpage
+
+% Table 6: WUI Mechanism
+\input{table6.tex}
+
+\end{document}

@@ -1,0 +1,15 @@
+item,value,note
+base_panel_rows,1925,以 GVC 因变量 1995-2019 主面板为准，不因 WUI 缺失而删除主表行。
+base_panel_countries,77,原始 GVC 因变量国家数。
+base_panel_year_min,1995,
+base_panel_year_max,2019,
+countries_with_full_wui_1995_2019,71,WUI 不可得的国家不做硬补。
+countries_missing_wui_column,"CYP, EST, ISL, LUX, MLT, STP",这些国家在 WUI T2 国别列中不存在。
+first_stage_complete_rows,1633,"M_it = PopGov_{i,t-1} + X_{i,t-1} + FE 可用样本。"
+all_three_outcomes_mediation_complete_rows,1573,"三个因变量都同时可用于 Y_it = PopGov_{i,t-2}+WUI_{i,t-1}+Y_{i,t-1}+X_{i,t-1}+FE 的样本。"
+shannon_entropy_w_mediation_complete_rows,1573,单个因变量机制方程可用样本。
+shannon_entropy_w_mediation_complete_countries,68,
+participation_coefficient_w_mediation_complete_rows,1573,单个因变量机制方程可用样本。
+participation_coefficient_w_mediation_complete_countries,68,
+laplacian_centrality_log_w_mediation_complete_rows,1573,单个因变量机制方程可用样本。
+laplacian_centrality_log_w_mediation_complete_countries,68,

@@ -1,0 +1,50 @@
+%% Table 6: WUI Mechanism Results
+
+\begin{table}[!htbp]
+\centering
+\caption{Policy Uncertainty Mechanism: World Uncertainty Index (WUI) Test}
+\label{tab:wui}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lC{1.6cm}C{1.6cm}C{1.6cm}C{1.6cm}C{1.6cm}C{1.6cm}C{1.6cm}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Group 1: Structure}} & \multicolumn{2}{c}{\textbf{Group 2: Position}} & \multicolumn{2}{c}{\textbf{Group 3: Embedding}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+& ACV & EV & LC & FB & WMDZ & SE & PC \\
+\midrule
+
+\multicolumn{8}{l}{\textit{Panel A: First Stage --- Populism$_{t-1}$ $\rightarrow$ WUI$_t$ (common across all outcomes)}} \\[2pt]
+Coef. & \multicolumn{7}{c}{0.019} \\
+$p$-value & \multicolumn{7}{c}{0.508 \quad (not significant)} \\
+
+\midrule
+\multicolumn{8}{l}{\textit{Panel B: Total effect of Populism$_{t-2}$ on GVC outcome (DML baseline)}} \\[2pt]
+Populism$_{t-2}$ &
+  0.002 & 0.000 & 0.013 & 0.000 & $-$0.004 & 0.016 & $-$0.003 \\
+$p$-value &
+  (0.596) & (0.549) & (0.632) & (0.985) & (0.834) & (0.115) & (0.809) \\
+
+\midrule
+\multicolumn{8}{l}{\textit{Panel C: Populism$_{t-2}$ and WUI$_{t-1}$ after adding WUI to nuisance (DML)}} \\[2pt]
+Populism$_{t-2}$ &
+  0.002 & 0.000 & 0.014 & 0.000 & $-$0.004 & 0.016 & $-$0.003 \\
+$p$-value &
+  (0.595) & (0.543) & (0.638) & (0.999) & (0.830) & (0.119) & (0.796) \\[2pt]
+WUI$_{t-1}$ &
+  $-$0.002 & $-$0.000 & $-$0.041 & 0.020 & 0.003 & 0.020 & 0.009 \\
+$p$-value &
+  (0.150) & (0.767) & (0.183) & (0.611) & (0.919) & (0.182) & (0.387) \\
+
+\midrule
+N & \multicolumn{7}{c}{$\approx$1,100--1,200 (WUI data availability limits sample)} \\
+$\Delta|\hat{\beta}|$ & $-$0.03 & $+$0.73 & $+$0.18 & $+$0.99 & $-$0.02 & $+$0.02 & $-$0.07 \\
+\multicolumn{8}{l}{\footnotesize (Positive = attenuation; Negative = amplification)} \\
+
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize
+\textit{Notes}: WUI is the World Uncertainty Index, constructed as the annual mean of quarterly values, log-transformed: $\ln(1+\overline{\text{WUI}}_t)$. Panel A reports the first-stage test of whether populism$_{t-1}$ predicts WUI$_t$; this first stage is common to all GVC outcomes. The first stage is not statistically significant ($p=0.508$), indicating that the policy uncertainty channel is not supported in this sample. Panels B and C compare the populism coefficient before and after adding WUI to the nuisance function; changes in magnitude are negligible and no WUI coefficient is statistically significant. $\Delta|\hat{\beta}|$ = proportional change in $|$populism coefficient$|$ from Panel B to Panel C (positive = attenuation). ACV = Algebraic Connectivity Vitality; EV = Efficiency Vitality; LC = log(Laplacian Centrality); FB = log(1+Flow Betweenness); WMDZ = Within-Module Degree Z-Score; SE = Shannon Entropy; PC = Participation Coefficient. $^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.10$.
+\end{minipage}
+\end{table}
