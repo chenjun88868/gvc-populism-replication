@@ -4,8 +4,6 @@
 
 This repository contains the curated replication files for the current manuscript version of *Populism and GVC Resilience*, archived in `manuscript/writing_sample_current_version.pdf`. The project studies how populist governments are associated with changes in global value chain resilience using cross-national panel data, dynamic specifications, double machine learning exercises, and mechanism analyses. The repository is organized as a self-contained empirical research package: it includes frozen analysis-ready datasets, version-locked manuscript assets, and Python scripts that regenerate the tables, regression summaries, and figures reported in the current draft.
 
-As a public-facing coding sample, the repository is designed to showcase a professional workflow for empirical political economy research: transparent data organization, reproducible estimation, publication-ready output generation, and clear separation between raw inputs, analysis data, code, outputs, and manuscript files. The framing is intentionally general so that the repository can serve as a polished research portfolio item across predoc applications.
-
 ## At a Glance
 
 - **Research question:** How is populist governance related to the resilience of countries' positions in global value chains?
